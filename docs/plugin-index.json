@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "title": {
+    "en": "DeepSeek Harness plugins",
+    "zh": "DeepSeek Harness 插件库"
+  },
+  "description": {
+    "en": "A small, verified index of DeepSeek Harness plugins.",
+    "zh": "一个精简、经过验证的 DeepSeek Harness 插件索引。"
+  },
+  "metadata": {
+    "categories": {
+      "session": {
+        "title": { "en": "Sessions", "zh": "会话" }
+      }
+    },
+    "labels": {
+      "session-tools": {
+        "title": { "en": "Session tools", "zh": "会话管理" }
+      },
+      "backup-safe": {
+        "title": { "en": "Backup-safe", "zh": "安全备份" }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-session-manager",
+      "title": {
+        "en": "Session Manager — delete sessions",
+        "zh": "会话管理器 — 删除会话"
+      },
+      "description": {
+        "en": "Permanently delete DeepSeek Harness chat sessions: search, multi-select, delete by session id, backup-first (a failed backup aborts), parent/child markers, last-used time, and an automatic conversation-list refresh afterwards.",
+        "zh": "在 DeepSeek Harness 里真正删除聊天会话：搜索、多选、按会话 ID 删除，默认先备份（备份失败即中止），父子会话标注、最后使用时间，删完自动刷新会话列表。"
+      },
+      "icon": "icon.png",
+      "author": "dsh-session-manager contributors",
+      "homepage": "https://shuixing14.github.io/dsh-session-manager/",
+      "repository": {
+        "url": "https://github.com/shuixing14/dsh-session-manager"
+      },
+      "metadata": {
+        "category": "session",
+        "keywords": ["session", "delete", "cleanup", "backup", "session-manager"],
+        "labels": ["session-tools", "backup-safe"]
+      },
+      "versions": [
+        {
+          "version": "0.2.0",
+          "publishTimestamp": 1794772800,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/shuixing14/dsh-session-manager",
+            "commit": "96c283998d7e5fb2dd3b387fb82e0037a42cce2e"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -13,8 +13,10 @@
 [![Node](https://img.shields.io/badge/node-%E2%89%A520-339933)](package.json)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-475467)](#-兼容性)
 [![Stars](https://img.shields.io/github/stars/shuixing14/dsh-session-manager?style=social)](https://github.com/shuixing14/dsh-session-manager/stargazers)
+[![Pages](https://img.shields.io/badge/docs-landing%20page-4f7cff)](https://shuixing14.github.io/dsh-session-manager/)
+[![DSH Market](https://img.shields.io/badge/DSH%20plugin%20market-format%201-8b5cf6)](https://shuixing14.github.io/dsh-session-manager/plugin-index.json)
 
-[快速开始](#-快速开始) · [功能](#-功能) · [截图](#-界面) · [安全模型](#-安全模型) · [常见问题](#-常见问题) · [开发](#-开发) · [English](#english)
+[部署命令](#-部署到自己的-dsh) · [插件库发布](PUBLISHING.md) · [在线主页](https://shuixing14.github.io/dsh-session-manager/) · [功能](#-功能) · [界面](#-界面) · [安全模型](#-安全模型) · [常见问题](#-常见问题) · [开发](#-开发) · [English](#english)
 
 </div>
 
@@ -48,24 +50,32 @@ DeepSeek Harness 目前**没有**删除会话的能力：
   前端再 `sessions.refresh()`，侧边栏**不需要重启**就少一行。
 - **安全守卫** —— 当前会话、其子会话、运行中的会话（需显式「强制删除」）不可选；非法 id 只报单条错误。
 
-## 🚀 快速开始
+## 🚀 部署到自己的 DSH
 
-### 方式一 · DSH 插件管理器（推荐）
+四种方式任选其一，装完 **刷新一次页面**（前端模块在页面加载时注入），侧栏即出现入口。
 
-在 Harness 会话里让 Agent 安装（bundle 形态，装完对整个 profile 生效）：
+### ① DSH 插件管理器（bundle，推荐）
+
+在 Harness 会话里让 Agent 执行（对整个 profile 生效）：
 
 ```
 plugin_manager install_bundle  target: <本仓库目录的绝对路径>
 ```
 
-### 方式二 · 从 tarball 安装
+### ② Release tarball
 
 ```bash
-# 下载 Release 里的 dsh-session-manager-<version>.tgz
+# 从 Releases 下载 dsh-session-manager-<version>.tgz
 dsh plugin --profile desktop add ./dsh-session-manager-0.2.0.tgz
 ```
 
-### 方式三 · 手工挂载
+### ③ 本地开发（link）
+
+```bash
+dsh plugin --profile desktop add link:/path/to/dsh-session-manager
+```
+
+### ④ 手工挂载
 
 在 profile 的 `package.json` 依赖里加入本包（`link:` 或版本号），并在 profile 的
 `cordis.patch.yml` 中加入：
@@ -76,7 +86,41 @@ dsh plugin --profile desktop add ./dsh-session-manager-0.2.0.tgz
       name: dsh-session-manager
 ```
 
-> 安装后 **刷新一次页面**（前端模块在页面加载时注入），侧栏即可看到入口。
+### 校验 / 启用 / 卸载
+
+```bash
+# 探活（端口以运行时为准）
+curl http://127.0.0.1:<port>/dsh-session-manager/status
+
+plugin_manager set_bundle  target: dsh-session-manager  enabled: true   # 启用
+plugin_manager set_bundle  target: dsh-session-manager  enabled: false  # 停用
+dsh plugin --profile desktop remove dsh-session-manager                 # 卸载
+```
+
+## 🧩 DSH 插件库（market index）
+
+本仓库同时托管一份符合 DSH `format: 1` 的**插件库索引**，可直接添加为 DSH 的索引源：
+
+```text
+https://shuixing14.github.io/dsh-session-manager/plugin-index.json
+```
+
+添加方式（任选）：
+
+1. **DSH 设置 → 插件市场（Discover）→ 添加索引源**，粘贴上面的 URL；
+2. 在 profile 的 patch 里给 `plugin-market` 行配置：
+
+```yaml
+- id: plugin-market
+  config:
+    indexes:
+      - https://shuixing14.github.io/dsh-session-manager/plugin-index.json
+```
+
+之后在「Discover」页即可看到本插件并一键安装。索引的字段规则、托管方式、
+npm / git 源写法、每次发版的完整流程见 **[PUBLISHING.md](PUBLISHING.md)**。
+
+在线主页（GitHub Pages）：<https://shuixing14.github.io/dsh-session-manager/>
 
 ## 🖱 界面
 
@@ -214,7 +258,8 @@ npm test        # 全部离线测试（假 DSH_HOME，不会触碰真实会话�
 | `lib/store.js` | 删除后尽力同步运行中的工作区登记 |
 | `client.js` | 浏览器半段：行菜单 + 侧栏按钮 + 对话框（经典脚本 bundle） |
 | `cordis.patch.yml` | bundle patch（插入插件行） |
-| `icon.svg` · `docs/` | 图标与 README 图片素材 |
+| `icon.svg` · `docs/` | 图标、README 图片素材、GitHub Pages 主页（`docs/index.html`）与插件库索引（`docs/plugin-index.json`） |
+| `PUBLISHING.md` | 部署命令与发布到 DSH 插件库 / npm 的完整指南 |
 | `verify/` · `research/` | 离线测试与开发期调研，运行期不需要 |
 
 ## 📄 许可
