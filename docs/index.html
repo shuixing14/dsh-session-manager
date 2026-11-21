@@ -152,18 +152,18 @@
       <div>
         <p class="cmd-title">① DSH 插件管理器（推荐）</p>
 <pre><span class="c"># 在 Harness 会话里让 Agent 执行</span>
-plugin_manager install_bundle  target: /path/to/dsh-session-manager</pre>
+plugin_manager install_bundle  target: &lt;本仓库绝对路径&gt;</pre>
       </div>
       <div>
         <p class="cmd-title">② Release tarball</p>
-<pre><span class="c"># 下载 dsh-session-manager-0.2.0.tgz 后</span>
+<pre><span class="c"># 下载 dsh-session-manager-&lt;version&gt;.tgz 后</span>
 dsh plugin --profile desktop add \
-  ./dsh-session-manager-0.2.0.tgz</pre>
+  ./dsh-session-manager-&lt;version&gt;.tgz</pre>
       </div>
       <div>
         <p class="cmd-title">③ 本地开发（link）</p>
 <pre>dsh plugin --profile desktop add \
-  link:/path/to/dsh-session-manager</pre>
+  link:&lt;本仓库绝对路径&gt;    <span class="c"># 例 D:\dsh\dsh-session-manager</span></pre>
       </div>
       <div>
         <p class="cmd-title">④ 手工挂载</p>

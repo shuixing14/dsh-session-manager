@@ -17,22 +17,27 @@
 在 Harness 会话里让 Agent 执行：
 
 ```
-plugin_manager install_bundle  target: /path/to/dsh-session-manager
+plugin_manager install_bundle  target: <本仓库目录的绝对路径>
 ```
+
+> ⚠️ 请替换 `<本仓库目录的绝对路径>`（例如 `D:\dsh\dsh-session-manager`）。
+> 原样照抄占位符会产生 `link:/path/to/dsh-session-manager` 这种不存在的依赖，
+> 插件卡片会显示「异常 / 包不可用」。
 
 装完对整个 profile 生效，**刷新一次页面**即可。
 
 ### 方式 ②：Release tarball
 
 ```bash
-# 从 Releases 下载 dsh-session-manager-<version>.tgz 后
-dsh plugin --profile desktop add ./dsh-session-manager-0.2.0.tgz
+# 从 Releases 下载 dsh-session-manager-<version>.tgz 后（把 <version> 换成实际版本号）
+dsh plugin --profile desktop add ./dsh-session-manager-<version>.tgz
 ```
 
 ### 方式 ③：本地开发（link）
 
 ```bash
-dsh plugin --profile desktop add link:/path/to/dsh-session-manager
+# <本仓库绝对路径> 换成真实路径，例如 D:\dsh\dsh-session-manager
+dsh plugin --profile desktop add link:<本仓库绝对路径>
 ```
 
 ### 方式 ④：手工挂载

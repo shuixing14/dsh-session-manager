@@ -62,6 +62,9 @@ DeepSeek Harness 目前**没有**删除会话的能力：
 plugin_manager install_bundle  target: <本仓库目录的绝对路径>
 ```
 
+> ⚠️ 尖括号里的内容**必须替换成你自己的真实路径**（例如 `D:\dsh\dsh-session-manager`）。
+> 直接照抄占位符会得到一个指向不存在目录的依赖，插件会显示「异常 / 包不可用」。
+
 ### ② Release tarball
 
 ```bash
@@ -72,7 +75,8 @@ dsh plugin --profile desktop add ./dsh-session-manager-0.2.0.tgz
 ### ③ 本地开发（link）
 
 ```bash
-dsh plugin --profile desktop add link:/path/to/dsh-session-manager
+# 把 <本仓库绝对路径> 换成真实路径，例如 D:\dsh\dsh-session-manager
+dsh plugin --profile desktop add link:<本仓库绝对路径>
 ```
 
 ### ④ 手工挂载
@@ -207,6 +211,24 @@ GET  /dsh-session-manager/boot.js    可直接 <script> 引入的启动版本
 宿主里没有加载插件（常见于刚重启、插件行未挂载）。先确认
 `GET http://127.0.0.1:<port>/dsh-session-manager/status` 返回 200；
 若 404，重启 Harness 后再刷新页面。
+</details>
+
+<details>
+<summary><b>插件显示「异常 / 包不可用」，来源是 <code>link:/path/to/dsh-session-manager</code></b></summary>
+
+说明安装时把文档里的占位符原样抄进去了，`link:` 指向了一个不存在的目录。修复：
+
+```bash
+# 1. 先确认插件目录真实存在（下面以 D:\dsh\dsh-session-manager 为例）
+dir D:\dsh\dsh-session-manager
+
+# 2. 用真实路径重新安装
+dsh plugin --profile desktop add link:D:\dsh\dsh-session-manager
+# 或让 Agent 执行：
+plugin_manager install_bundle  target: D:\dsh\dsh-session-manager
+```
+
+装完刷新页面；`GET /dsh-session-manager/status` 返回 200 即恢复。
 </details>
 
 <details>
