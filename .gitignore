@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build / pack output
+*.tgz
+dist/
+
+# Logs
+*.log
+logs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test scratch output (produced by verify/*.mjs and research/*.cjs)
+verify/r2deps/
+verify/fakehome-*/
+verify/collide-*/
+verify/r2home-*/
+verify/r2outside-*/
+verify/outside-*/
+verify/tmphome/
+verify/titles-*/
+verify/r2facade2-*/
+verify/*-results.json
+verify/r2-*.json
+verify/src/
+*.tmp
+*.tmp.json
+
+# One-off research scripts and asar extracts are local-only (third-party code / large dumps)
+research/*.py
+research/mock-host.mjs
+research/probe-proxy-shape.mjs
+research/*.json
+research/tmphome/
+research/projcache.js
+research/storage.js
+research/storage-json.js
+research/storage-domain.js
+research/workspace.js
+research/client-modules.js
+research/all-files.txt
+research/asar/
+research/extracted/

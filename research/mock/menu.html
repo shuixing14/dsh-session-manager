@@ -1,0 +1,96 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8" /><title>dsh-session-manager · 会话行菜单</title><link rel="stylesheet" href="dialog.css" /><style>
+  :root {
+    --dsw-alias-bg-base: #ffffff; --dsw-alias-bg-layer-1: #ffffff; --dsw-alias-bg-layer-2: #f7f8fa;
+    --dsw-alias-label-primary: #1f2328; --dsw-alias-label-secondary: #6b7280;
+    --dsw-alias-border-l2: rgba(0,0,0,.10); --dsw-alias-brand-primary: #4f7cff;
+    --dsw-alias-brand-bg-subtle: rgba(79,124,255,.14);
+    --dsw-alias-state-error-primary: #dc2626; --dsw-alias-state-success-primary: #16a34a;
+    --dsw-alias-state-warning-primary: #b45309; --dsw-alias-interactive-bg-hover: #eceef2;
+  }
+  html, body { margin: 0; height: 100%; }
+  body { background: radial-gradient(1200px 600px at 20% 0%, #eef2ff 0%, #f6f7f9 45%, #eef0f3 100%);
+    font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, -apple-system, sans-serif;
+    display: flex; align-items: center; justify-content: center; padding: 46px 40px; box-sizing: border-box; }
+  .stage { width: 980px; }
+  .window { border-radius: 14px; background: #fff; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(15,23,42,.22), 0 2px 6px rgba(15,23,42,.08);
+    border: 1px solid rgba(15,23,42,.08); }
+  .titlebar { height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 14px;
+    background: #f7f8fa; border-bottom: 1px solid rgba(15,23,42,.07); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff6058; } .dot.y { background: #ffbd2e; } .dot.g { background: #28c941; }
+  .titlebar .app { margin-left: 8px; font-size: 12px; color: #8b93a1; }
+  .body { padding: 18px 20px 16px; }
+  .caption { margin: 18px 4px 0; font-size: 12.5px; color: #5b6472; }
+  .caption b { color: #1f2328; }
+  .caption .kbd { font: 11px/1.4 ui-monospace, Menlo, monospace; background:#fff;
+    border:1px solid rgba(15,23,42,.14); border-bottom-width:2px; border-radius:5px; padding:1px 5px; color:#3b4250; }
+  .dsm-list { list-style: none; margin: 0; padding: 0; overflow: auto; max-height: 372px; }
+  .dsm-results-list { list-style: none; margin: 0; padding: 0; }
+  .dsm-result-mark.ok { color: var(--dsw-alias-state-success-primary); }
+  .dsm-results-title { margin: 0 0 4px; font-size: 12.5px; font-weight: 600; color: var(--dsw-alias-label-primary); }
+  .dsm-results-summary { margin: 0 0 6px; font-size: 12px; }
+  .dsm-results-backup { margin: 8px 0 0; font-size: 11.5px; color: var(--dsw-alias-label-secondary); word-break: break-all; }
+  .dsm-result-row { padding: 2px 0; }
+
+  body { align-items: center; }
+  .stage { display: flex; gap: 34px; align-items: flex-start; width: auto; }
+  .side { width: 322px; background: #fbfbfd; border: 1px solid rgba(15,23,42,.09); border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(15,23,42,.16), 0 2px 6px rgba(15,23,42,.06); }
+  .side-head { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid rgba(15,23,42,.09); }
+  .brand { width: 18px; height: 18px; border-radius: 6px; background: linear-gradient(135deg, #5b8cff, #8b5cf6); }
+  .side-head .name { font-size: 13px; font-weight: 600; color: #1f2328; }
+  .side-head .spacer { flex: 1; } .side-head .plus { color: #6b7280; font-size: 16px; }
+  .group { padding: 10px 10px 14px; }
+  .group-title { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6b7280; padding: 6px; }
+  .srow { position: relative; display: flex; align-items: center; gap: 8px; border-radius: 8px; padding: 7px 8px; font-size: 12.5px; color: #333a45; }
+  .srow .sdot { width: 6px; height: 6px; border-radius: 50%; background: #c2c8d2; flex: none; }
+  .srow .stitle { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .srow.active { background: #e9edf5; font-weight: 600; }
+  .srow .stime { font-size: 11px; color: #6b7280; }
+  .srow .more { color: #6b7280; font-size: 15px; letter-spacing: 1px; }
+  .srow.hover .more { color: #1f2328; }
+  .menu { position: absolute; top: 30px; right: 6px; z-index: 5; width: 208px; background: #fff;
+    border: 1px solid rgba(15,23,42,.09); border-radius: 10px; padding: 5px;
+    box-shadow: 0 18px 44px rgba(15,23,42,.22), 0 2px 8px rgba(15,23,42,.10); }
+  .mitem { display: flex; align-items: center; gap: 9px; padding: 6px 8px; border-radius: 7px; font-size: 12.5px; color: #1f2328; }
+  .mitem .ico { width: 15px; text-align: center; color: #6b7280; font-family: "Segoe UI Symbol", system-ui; }
+  .mitem.hl { background: rgba(220,38,38,.08); color: #dc2626; font-weight: 600; }
+  .mitem.hl .ico { color: #dc2626; }
+  .msep { height: 1px; background: rgba(15,23,42,.09); margin: 5px 4px; }
+  .mitem .kbd { margin-left: auto; font-size: 10.5px; color: #9aa2ae; }
+  .hint { width: 420px; padding-top: 8px; }
+  .hint h3 { margin: 0 0 8px; font-size: 15px; color: #1f2328; }
+  .hint p { margin: 0 0 10px; font-size: 12.5px; line-height: 1.75; color: #4b5563; }
+  .hint code { font: 11.5px/1.5 ui-monospace, Menlo, monospace; background: #fff; border: 1px solid rgba(15,23,42,.09); border-radius: 5px; padding: 1px 5px; color: #3b4250; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; margin-right: 6px; padding: 2px 8px; border-radius: 999px; background: rgba(79,124,255,.12); color: #4f7cff; font-size: 11.5px; font-weight: 600; }
+</style></head><body><div class="stage">
+  <div class="side">
+    <div class="side-head"><span class="brand"></span><span class="name">DeepSeek Harness</span><span class="spacer"></span><span class="plus">＋</span></div>
+    <div class="group">
+      <div class="group-title"><span>▾</span> example</div>
+      <div class="srow active"><span class="sdot"></span><span class="stitle">示例项目 · 索引重构</span><span class="more">⋯</span></div>
+      <div class="srow"><span class="sdot"></span><span class="stitle">梳理索引构建流程</span><span class="stime">20:48</span></div>
+      <div class="srow hover"><span class="sdot"></span><span class="stitle">文档整理批处理</span><span class="more">⋯</span>
+        <div class="menu" role="menu">
+          <div class="mitem"><span class="ico">⬆</span>置顶会话</div>
+          <div class="mitem"><span class="ico">✎</span>重命名</div>
+          <div class="mitem"><span class="ico">⑂</span>分叉会话</div>
+          <div class="mitem"><span class="ico">▣</span>归档</div>
+          <div class="msep"></div>
+          <div class="mitem"><span class="ico">#</span>复制会话 ID</div>
+          <div class="mitem hl"><span class="ico">⌫</span>删除会话<span class="kbd">插件</span></div>
+        </div>
+      </div>
+      <div class="srow"><span class="sdot"></span><span class="stitle">API 迁移计划</span><span class="stime">昨天</span></div>
+      <div class="srow"><span class="sdot"></span><span class="stitle">发布检查清单</span><span class="stime">11-07</span></div>
+      <div class="srow"><span class="sdot"></span><span class="stitle">（未命名会话）</span><span class="stime">10-24</span></div>
+    </div>
+  </div>
+  <div class="hint">
+    <h3>入口就在会话行的「⋯」菜单里</h3>
+    <p>点 <code>删除会话</code> 会打开对话框并<b>预先勾选这一条会话</b>；侧栏底部的按钮则用于批量清理。</p>
+    <p><span class="badge">↳ 子会话</span>子代理/协作会话会标注父会话；<span class="badge" style="background:rgba(220,38,38,.09);color:#dc2626">含 N 个子会话</span>父会话显示子会话数量。</p>
+    <p style="color:#6b7280">「未分组」里本来就是子代理会话 —— 它们从不属于某个工作区，不是删除残留。</p>
+  </div>
+</div></body></html>

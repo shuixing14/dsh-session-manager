@@ -1,0 +1,57 @@
+name: Bug report
+description: 报告一个问题（崩溃、删除异常、界面异常等）
+title: '[bug] '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！提交前请先确认：
+        1. 已**刷新页面**、必要时**重启 Harness** 后问题依旧；
+        2. `GET /dsh-session-manager/status` 的返回（若可用）。
+  - type: input
+    id: version
+    attributes:
+      label: 插件版本
+      description: Release 标签或 `package.json` 里的 version
+      placeholder: '0.2.0'
+    validations:
+      required: true
+  - type: input
+    id: dsh
+    attributes:
+      label: DeepSeek Harness 版本 / 平台
+      placeholder: '0.2.1-rc.5 · Windows 11 · 桌面客户端'
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: 发生了什么
+      description: 现象、期望结果；对话框里的错误文案请原文粘贴（它会写明尝试过的地址/端口与状态码）
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开会话行「⋯」→ 删除会话
+        2. …
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关证据
+      description: 浏览器 DevTools Console 报错、`/dsh-session-manager/status` 输出、备份目录里的 `manifest.json` 等
+      render: shell
+    validations:
+      required: false
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: 数据安全
+      options:
+        - label: 我已确认问题不涉及删除他人会话 / 误删（如涉及，请先从 `session-delete-backup/` 恢复）
+          required: false

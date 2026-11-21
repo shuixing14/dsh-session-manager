@@ -1,0 +1,51 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8" /><title>dsh-session-manager · 删除结果</title><link rel="stylesheet" href="dialog.css" /><style>
+  :root {
+    --dsw-alias-bg-base: #ffffff; --dsw-alias-bg-layer-1: #ffffff; --dsw-alias-bg-layer-2: #f7f8fa;
+    --dsw-alias-label-primary: #1f2328; --dsw-alias-label-secondary: #6b7280;
+    --dsw-alias-border-l2: rgba(0,0,0,.10); --dsw-alias-brand-primary: #4f7cff;
+    --dsw-alias-brand-bg-subtle: rgba(79,124,255,.14);
+    --dsw-alias-state-error-primary: #dc2626; --dsw-alias-state-success-primary: #16a34a;
+    --dsw-alias-state-warning-primary: #b45309; --dsw-alias-interactive-bg-hover: #eceef2;
+  }
+  html, body { margin: 0; height: 100%; }
+  body { background: radial-gradient(1200px 600px at 20% 0%, #eef2ff 0%, #f6f7f9 45%, #eef0f3 100%);
+    font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, -apple-system, sans-serif;
+    display: flex; align-items: center; justify-content: center; padding: 46px 40px; box-sizing: border-box; }
+  .stage { width: 980px; }
+  .window { border-radius: 14px; background: #fff; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(15,23,42,.22), 0 2px 6px rgba(15,23,42,.08);
+    border: 1px solid rgba(15,23,42,.08); }
+  .titlebar { height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 14px;
+    background: #f7f8fa; border-bottom: 1px solid rgba(15,23,42,.07); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff6058; } .dot.y { background: #ffbd2e; } .dot.g { background: #28c941; }
+  .titlebar .app { margin-left: 8px; font-size: 12px; color: #8b93a1; }
+  .body { padding: 18px 20px 16px; }
+  .caption { margin: 18px 4px 0; font-size: 12.5px; color: #5b6472; }
+  .caption b { color: #1f2328; }
+  .caption .kbd { font: 11px/1.4 ui-monospace, Menlo, monospace; background:#fff;
+    border:1px solid rgba(15,23,42,.14); border-bottom-width:2px; border-radius:5px; padding:1px 5px; color:#3b4250; }
+  .dsm-list { list-style: none; margin: 0; padding: 0; overflow: auto; max-height: 372px; }
+  .dsm-results-list { list-style: none; margin: 0; padding: 0; }
+  .dsm-result-mark.ok { color: var(--dsw-alias-state-success-primary); }
+  .dsm-results-title { margin: 0 0 4px; font-size: 12.5px; font-weight: 600; color: var(--dsw-alias-label-primary); }
+  .dsm-results-summary { margin: 0 0 6px; font-size: 12px; }
+  .dsm-results-backup { margin: 8px 0 0; font-size: 11.5px; color: var(--dsw-alias-label-secondary); word-break: break-all; }
+  .dsm-result-row { padding: 2px 0; }
+</style></head><body><div class="stage"><div class="window"><div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="app">DeepSeek Harness · 插件预览</span></div><div class="body"><div class="dsm-modal" role="dialog" aria-modal="true" style="width:100%;max-height:none;box-shadow:none;border:0;padding:0"><div class="dsm-head"><h2 class="dsm-title">删除会话</h2><button class="dsm-iconbtn dsm-close" type="button" aria-label="关闭">✕</button></div><p class="dsm-desc">勾选要永久删除的会话。删除会移除会话日志、索引缓存与工作区记录；默认先备份到 <code>C:\Users\you\.dsh\session-delete-backup\2026-11-21T21-04-12/</code>，之后可从备份里还原。</p><div class="dsm-notice" role="status">已刷新侧边栏会话列表</div>
+     <div class="dsm-results">
+       <p class="dsm-results-title">删除结果</p>
+       <p class="dsm-results-summary">成功 3 项，失败 1 项。</p>
+       <ul class="dsm-results-list">
+         <li class="dsm-result-row"><span class="dsm-result-mark ok">✓</span><span class="dsm-result-msg">session-7f3a91c2… · 已删除</span></li>
+         <li class="dsm-result-row"><span class="dsm-result-mark ok">✓</span><span class="dsm-result-msg">session-9c1e5a7b… · 已删除</span></li>
+         <li class="dsm-result-row"><span class="dsm-result-mark ok">✓</span><span class="dsm-result-msg">session-0d3c7b1e… · 已删除</span></li>
+         <li class="dsm-result-row"><span class="dsm-result-mark">✗</span><span class="dsm-result-msg">session-4e6b2a8d… · 会话正在运行，请先停止它，或勾选“强制删除”</span></li>
+       </ul>
+       <p class="dsm-results-backup">备份目录：C:/Users/you/.dsh/session-delete-backup/2026-11-21T21-04-12</p>
+       <p class="dsm-results-hint">界面列表可能需要刷新或重启后才会完全消失。</p>
+     </div>
+     <footer class="dsm-foot" style="margin-top:12px">
+       <span class="dsm-foot-hint">删除后无法从列表中恢复，只能从备份目录还原。</span>
+       <div class="dsm-foot-actions"><button class="dsm-btn dsm-btn-quiet" type="button">取消</button><button class="dsm-btn dsm-btn-primary" type="button">完成</button></div>
+     </footer></div></div></div><div class="caption"><b>删除结果</b> · 每个 id 的成功 / 失败原因、备份目录、以及「已刷新侧边栏会话列表」提示</div></div></body></html>

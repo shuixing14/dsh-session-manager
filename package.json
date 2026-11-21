@@ -1,0 +1,76 @@
+{
+  "name": "dsh-session-manager",
+  "version": "0.2.0",
+  "description": "DeepSeek Harness 插件：真正删除聊天会话 —— 按会话 ID 搜索多选、显示最后使用时间与父子关系、默认先备份再删除，删完自动刷新会话列表。Delete DSH sessions, backup-first.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "dsh-bundle",
+    "deepseek-harness",
+    "session",
+    "session-manager",
+    "delete",
+    "cleanup",
+    "backup",
+    "session-list"
+  ],
+  "author": "dsh-session-manager contributors",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "icon": "icon.svg",
+  "files": [
+    "lib",
+    "client.js",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [],
+      "external": []
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shuixing14/dsh-session-manager.git"
+  },
+  "homepage": "https://github.com/shuixing14/dsh-session-manager#readme",
+  "bugs": {
+    "url": "https://github.com/shuixing14/dsh-session-manager/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "check": "node --check lib/index.js && node --check lib/store.js && node --check client.js",
+    "test": "node research/client-check.cjs && node verify/host-e2e.mjs && node verify/http-routes.mjs && node verify/titles.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-typert-protocol": "*"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-typert-protocol": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

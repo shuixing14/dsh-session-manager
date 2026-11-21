@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 560" width="1180" height="560" role="img" aria-label="dsh-session-manager architecture">
+  <defs>
+    <linearGradient id="a-brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5b8cff"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <marker id="a-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="a-arrow-brand" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4f7cff"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: rgba(15,23,42,.12); stroke-width: 1.2; }
+      .box-soft { fill: #f7f8fb; stroke: rgba(15,23,42,.10); stroke-width: 1.2; }
+      .t { font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif; fill: #101828; }
+      .t-title { font-size: 15px; font-weight: 650; }
+      .t-sub { font-size: 12px; fill: #667085; }
+      .t-mono { font-family: ui-monospace, Consolas, monospace; font-size: 11.5px; fill: #475467; }
+      .lane { font-size: 11px; font-weight: 700; letter-spacing: .6px; fill: #98a2b3; }
+      .wire { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+      .wire-brand { stroke: #4f7cff; stroke-width: 1.6; fill: none; }
+      .chip { font-size: 11px; font-weight: 600; fill: #4f7cff; }
+    </style>
+  </defs>
+
+  <rect width="1180" height="560" fill="#ffffff"/>
+
+  <!-- lanes -->
+  <text class="t lane" x="40" y="42">① 浏览器 / ELECTRON 页面（dsh-app://app）</text>
+  <text class="t lane" x="40" y="212">② 宿主进程（DSH Host）</text>
+  <text class="t lane" x="40" y="392">③ 磁盘（DSH_HOME）</text>
+
+  <!-- ① client -->
+  <rect class="box" x="40" y="58" width="270" height="112" rx="12"/>
+  <text class="t t-title" x="62" y="88">client.js（浏览器半段）</text>
+  <text class="t t-sub" x="62" y="110">侧栏「⋯」菜单 · 底部按钮</text>
+  <text class="t t-sub" x="62" y="130">对话框：搜索 / 多选 / 最后使用</text>
+  <text class="t t-sub" x="62" y="150">父子徽标 · 备份开关 · 结果面板</text>
+
+  <rect class="box-soft" x="340" y="58" width="200" height="112" rx="12"/>
+  <text class="t t-title" x="360" y="88">传输链</text>
+  <text class="t t-sub" x="360" y="110">同源 HTTP（dsh-app 反代）</text>
+  <text class="t t-sub" x="360" y="130">→ 相邻回环端口</text>
+  <text class="t t-sub" x="360" y="150">→ 失败时明确报错</text>
+
+  <!-- ② host -->
+  <rect class="box" x="40" y="228" width="500" height="130" rx="12"/>
+  <text class="t t-title" x="62" y="258">lib/index.js（宿主半段）</text>
+  <text class="t t-sub" x="62" y="280">列出会话 · 解析标题 · 备份 · 删除 · 刷新</text>
+  <text class="t-mono" x="62" y="304">GET  /status   GET /list   GET /token</text>
+  <text class="t-mono" x="62" y="324">POST /resolve   POST /delete</text>
+  <text class="t-mono" x="62" y="344">GET  /client.js  GET /boot.js</text>
+
+  <rect class="box-soft" x="580" y="228" width="250" height="130" rx="12"/>
+  <text class="t t-title" x="600" y="258">安全栅栏</text>
+  <text class="t t-sub" x="600" y="280">回环 / 同源 / 宿主 cookie</text>
+  <text class="t t-sub" x="600" y="300">写请求要求 JSON + 口令</text>
+  <text class="t t-sub" x="600" y="320">64 KB 上限 · CORS 白名单</text>
+  <text class="t t-sub" x="600" y="340">路径包含校验</text>
+
+  <rect class="box-soft" x="870" y="228" width="270" height="130" rx="12"/>
+  <text class="t t-title" x="890" y="258">DSH 官方服务</text>
+  <text class="t t-sub" x="890" y="280">sessionPersistence（清单）</text>
+  <text class="t t-sub" x="890" y="300">sessionQuery / sessionTitle</text>
+  <text class="t t-sub" x="890" y="320">workspaceRegistry.detachSession</text>
+  <text class="t t-sub" x="890" y="340">api-session/removed（刷新）</text>
+
+  <!-- ③ disk -->
+  <rect class="box" x="40" y="410" width="330" height="118" rx="12"/>
+  <text class="t t-title" x="62" y="440">sessions/</text>
+  <text class="t t-sub" x="62" y="462">--project--/&lt;id&gt;/session.v4.jsonl.zstd</text>
+  <text class="t t-sub" x="62" y="482">（最后使用时间 = 该文件 mtime）</text>
+  <text class="t t-sub" x="62" y="502">旧版 v0 日志同目录，一并删除</text>
+
+  <rect class="box" x="400" y="410" width="330" height="118" rx="12"/>
+  <text class="t t-title" x="422" y="440">storages/</text>
+  <text class="t t-sub" x="422" y="462">session_projcache/sessions/&lt;id&gt;.json</text>
+  <text class="t t-sub" x="422" y="482">workspace.json（sessionIds 等）</text>
+  <text class="t t-sub" x="422" y="502">改写前留 .bak-&lt;时间戳&gt;</text>
+
+  <rect class="box" x="760" y="410" width="380" height="118" rx="12"/>
+  <text class="t t-title" x="782" y="440">session-delete-backup/&lt;timestamp&gt;/</text>
+  <text class="t t-sub" x="782" y="462">sessions/&lt;id&gt;/…　原始日志目录</text>
+  <text class="t t-sub" x="782" y="482">storages/…　编辑前的 JSON</text>
+  <text class="t t-sub" x="782" y="502">manifest.json　本次删除记录</text>
+
+  <!-- wires -->
+  <path class="wire-brand" d="M310 114 H338" marker-end="url(#a-arrow-brand)"/>
+  <path class="wire-brand" d="M440 170 V206 H290 V226" marker-end="url(#a-arrow-brand)"/>
+  <text class="t chip" x="352" y="196">fetch（同源）</text>
+
+  <path class="wire" d="M540 293 H578" marker-end="url(#a-arrow)"/>
+  <path class="wire" d="M830 293 H868" marker-end="url(#a-arrow)"/>
+  <path class="wire" d="M1005 358 V390" marker-end="url(#a-arrow)"/>
+  <path class="wire" d="M290 358 V388" marker-end="url(#a-arrow)"/>
+  <path class="wire" d="M300 356 V386" marker-end="url(#a-arrow)"/>
+  <text class="t chip" x="596" y="382">软接口调用（幂等）</text>
+</svg>
